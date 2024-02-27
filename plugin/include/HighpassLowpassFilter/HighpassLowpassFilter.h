@@ -8,7 +8,7 @@ class HighpassLowpassFilter {
         void setHighpass(bool highpass);
         void setCutoffFrequency(float cutoffFrequency);
         void setSamplingRate(float samplingRate);
-        void processBlock(juce::AudioBuffer<float> &, juce::MidiBuffer &);
+        void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&);
     private:
         bool highpass;
         float cutoffFrequency;
