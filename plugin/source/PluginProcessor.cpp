@@ -11,13 +11,27 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 #endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-      ) {
+              ),
+      parameters(*this,
+                 nullptr,
+                 juce::Identifier("HighpassLowpassFilter"),
+                 {std::make_unique<juce::AudioParameterFloat>(
+                      "cutoff_frequency",
+                      "Cutoff Frequency",
+                      juce::NormalisableRange{20.f, 20000.f, 0.1f, 0.2f, false},
+                      500.f),
+                  std::make_unique<juce::AudioParameterBool>("highpass",
+                                                             "Highpass",
+                                                             false)}) {
+  cutoffFrequencyParameter =
+      parameters.getRawParameterValue("cutoff_frequency");
+  highpassParameter = parameters.getRawParameterValue("highpass");
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
 
 const juce::String AudioPluginAudioProcessor::getName() const {
-  return JucePlugin_Name;
+  return "HighpassLowpassFilter";
 }
 
 bool AudioPluginAudioProcessor::acceptsMidi() const {
@@ -74,8 +88,7 @@ void AudioPluginAudioProcessor::changeProgramName(int index,
 
 void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
                                               int samplesPerBlock) {
-  // Use this method as the place to do any pre-playback
-  // initialisation that you need..
+  filter.setSamplingRate(static_cast<float>(sampleRate));
   juce::ignoreUnused(sampleRate, samplesPerBlock);
 }
 
@@ -116,26 +129,15 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   auto totalNumInputChannels = getTotalNumInputChannels();
   auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-  // In case we have more outputs than inputs, this code clears any output
-  // channels that didn't contain input data, (because these aren't
-  // guaranteed to be empty - they may contain garbage).
-  // This is here to avoid people getting screaming feedback
-  // when they first compile a plugin, but obviously you don't need to keep
-  // this code if your algorithm always overwrites all the output channels.
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
-  // This is the place where you'd normally do the guts of your plugin's
-  // audio processing...
-  // Make sure to reset the state if your inner loop is processing
-  // the samples and the outer loop is handling the channels.
-  // Alternatively, you can process the samples with the channels
-  // interleaved by keeping the same state.
-  for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-    auto* channelData = buffer.getWritePointer(channel);
-    juce::ignoreUnused(channelData);
-    // ..do something to the data...
-  }
+  const auto cutoffFrequency = cutoffFrequencyParameter->load();
+  const auto highpass = *highpassParameter < 0.5f ? false : true;
+
+  filter.setCutoffFrequency(cutoffFrequency);
+  filter.setHighpass(highpass);
+  filter.processBlock(buffer, midiMessages);
 }
 
 bool AudioPluginAudioProcessor::hasEditor() const {
