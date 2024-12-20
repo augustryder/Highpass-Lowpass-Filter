@@ -43,19 +43,18 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics& g) {
 void AudioPluginAudioProcessorEditor::resized() {
   // This is generally where you'll want to lay out the positions of any
   // subcomponents in your editor..
-  const auto sliderX = cutoffFrequencySlider.getX();
-  const auto sliderY = cutoffFrequencySlider.getY();
-  const auto sliderHeight = cutoffFrequencySlider.getHeight();
-  const auto sliderWidth = cutoffFrequencySlider.getWidth();
-  const auto buttonY = highpassButton.getY();
-  const auto buttonHeight = highpassButton.getHeight();
-  const auto buttonWidth = highpassButton.getWidth();
 
   cutoffFrequencySlider.setBounds({15, 35, 100, 300});
-  cutoffFrequencyLabel.setBounds({sliderX + 30, sliderY - 30, 200, 50});
+  cutoffFrequencyLabel.setBounds({cutoffFrequencySlider.getX() + 30, 
+                                  cutoffFrequencySlider.getY() - 30, 200, 50});
 
-  highpassButton.setBounds({sliderX, sliderY + sliderHeight + 15, 30, 50});
-  highpassButtonLabel.setBounds({sliderX + buttonWidth + 15, buttonY, sliderWidth - buttonWidth, buttonHeight});
+  highpassButton.setBounds({cutoffFrequencySlider.getX(), 
+                            cutoffFrequencySlider.getY() + cutoffFrequencySlider.getHeight() + 15, 
+                            30, 50});
+  highpassButtonLabel.setBounds({cutoffFrequencySlider.getX() + highpassButton.getWidth() + 15, 
+                                 highpassButton.getY(), 
+                                 cutoffFrequencySlider.getWidth() - highpassButton.getWidth(), 
+                                 highpassButton.getHeight()});
               
 }
 }  // namespace audio_plugin
