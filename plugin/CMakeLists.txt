@@ -14,7 +14,7 @@ juce_add_plugin(${PROJECT_NAME}
     NEEDS_MIDI_INPUT FALSE # may change this
     NEEDS_MIDI_OUTPUT FALSE # may change this
     PLUGIN_MANUFACTURER_CODE AUGH # change this
-    PLUGIN_CODE Temp # change this
+    PLUGIN_CODE Hplp # change this
     FORMATS Standalone VST3 # may change this
     PRODUCT_NAME "HighpassLowpassFilter" # change this
 )
@@ -59,11 +59,11 @@ target_compile_definitions(${PROJECT_NAME}
 
 # Enables all warnings and treats warnings as errors.
 # This needs to be set up only for your projects, not 3rd party
-if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
-else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
-endif()
+# if (MSVC)
+#     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+# else()
+#     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+# endif()
 
 # In Visual Studio this command provides a nice grouping of source files in "filters".
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/..)
