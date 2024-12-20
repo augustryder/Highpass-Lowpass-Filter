@@ -14,7 +14,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
       parameters(*this, nullptr, juce::Identifier("HighpassLowpassPlugin"), 
                  {std::make_unique<juce::AudioParameterFloat>("cutoff_frequency", "Cutoff Frequency", 
                   juce::NormalisableRange{20.f, 20000.f, 0.1f, 0.2f, false}, 500.f), 
-                  std::make_unique<juce::AudioParameterBool>("highpass", "Highpass, false")}
+                  std::make_unique<juce::AudioParameterBool>("highpass", "Highpass", false)}
       )
 {
   cutoffFrequencyParameter = parameters.getRawParameterValue("cutoff_frequency");
@@ -81,6 +81,7 @@ void AudioPluginAudioProcessor::changeProgramName(int index,
 
 void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
                                               int samplesPerBlock) {
+  juce::ignoreUnused(samplesPerBlock);
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
   filter.setSamplingRate(static_cast<float>(sampleRate));

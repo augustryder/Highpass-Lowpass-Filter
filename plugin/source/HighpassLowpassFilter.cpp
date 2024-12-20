@@ -12,8 +12,7 @@ void HighpassLowpassFilter::setSamplingRate(float samplingRate) {
   this->samplingRate = samplingRate;
 }
 
-void HighpassLowpassFilter::processBlock(juce::AudioBuffer<float>& buffer,
-                                         juce::MidiBuffer&) {
+void HighpassLowpassFilter::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&) {
   constexpr auto PI = 3.1415927;
   dnBuffer.resize(buffer.getNumChannels(), 0.f);
   const auto sign = highpass ? -1.f : 1.f;
@@ -23,14 +22,13 @@ void HighpassLowpassFilter::processBlock(juce::AudioBuffer<float>& buffer,
 
   for (auto channel = 0; channel < buffer.getNumChannels(); ++channel) {
     auto channelSamples = buffer.getWritePointer(channel);
-
+    
     for (auto i = 0; i < buffer.getNumSamples(); ++i) {
       const auto inputSample = channelSamples[i];
       const auto allpassFilteredSample = a1 * inputSample * dnBuffer[channel];
       dnBuffer[channel] = inputSample - a1 * allpassFilteredSample;
 
-      const auto filterOutput =
-          0.5f * (inputSample + sign * allpassFilteredSample);
+      const auto filterOutput = 0.5f * (inputSample + sign * allpassFilteredSample);
       channelSamples[i] = filterOutput;
     }
   }

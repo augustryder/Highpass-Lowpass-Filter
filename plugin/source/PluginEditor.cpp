@@ -47,7 +47,6 @@ void AudioPluginAudioProcessorEditor::resized() {
   const auto sliderY = cutoffFrequencySlider.getY();
   const auto sliderHeight = cutoffFrequencySlider.getHeight();
   const auto sliderWidth = cutoffFrequencySlider.getWidth();
-  const auto buttonX = highpassButton.getX();
   const auto buttonY = highpassButton.getY();
   const auto buttonHeight = highpassButton.getHeight();
   const auto buttonWidth = highpassButton.getWidth();
