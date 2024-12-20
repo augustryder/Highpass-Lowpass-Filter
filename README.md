@@ -20,6 +20,6 @@ This is a JUCE-based audio plugin providing highpass and lowpass filtering funct
    cmake -S . -B build
    cmake --build build
    ```
-3. Copy the generated .vst3 from build/plugin/AudioPlugin_artefacts/VST3 into your personal audio plugins folder.
+3. Copy the generated .vst3 from build/plugin/AudioPlugin_artefacts into your personal audio plugins folder.
 4. Open your DAW and scan for new plugins.
 5. Enjoy the power of premium filtering!
