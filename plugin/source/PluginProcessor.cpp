@@ -1,5 +1,5 @@
-#include "YourPluginName/PluginProcessor.h"
-#include "YourPluginName/PluginEditor.h"
+#include "HighpassLowpassFilter/PluginProcessor.h"
+#include "HighpassLowpassFilter/PluginEditor.h"
 
 namespace audio_plugin {
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
@@ -17,7 +17,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
 
 const juce::String AudioPluginAudioProcessor::getName() const {
-  return "YourPluginName";
+  return "HighpassLowpassFilter";
 }
 
 bool AudioPluginAudioProcessor::acceptsMidi() const {
