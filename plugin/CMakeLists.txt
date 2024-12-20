@@ -24,8 +24,10 @@ target_sources(${PROJECT_NAME}
     PRIVATE
         source/PluginEditor.cpp
         source/PluginProcessor.cpp
+        source/HighpassLowpassFilter.cpp
         ${INCLUDE_DIR}/PluginEditor.h
         ${INCLUDE_DIR}/PluginProcessor.h
+        ${INCLUDE_DIR}/HighpassLowpassFilter.h
 )
 
 # Sets the include directories of the plugin project.
